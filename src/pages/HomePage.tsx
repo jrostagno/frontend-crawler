@@ -60,6 +60,7 @@ export function HomePage() {
       : crawlResult?.status === "already_seen"
         ? "Ya vista (sin recrawl)"
         : crawlResult?.status;
+  const productDescription = crawlResult?.description;
 
   return (
     <div className="space-y-6">
@@ -89,6 +90,18 @@ export function HomePage() {
           <p className="text-emerald-200">
             Nuevas palabras agregadas: {crawlResult.new_words}
           </p>
+          {productDescription ? (
+            <div className="mt-4 rounded-lg border border-emerald-700/50 bg-emerald-950/40 p-3">
+              <p className="mb-1 text-xs uppercase tracking-wide text-emerald-300">
+                Product description
+              </p>
+              <p className="text-emerald-100">{productDescription}</p>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-emerald-300/80">
+              El backend no envio descripcion en la respuesta del crawl.
+            </p>
+          )}
         </section>
       )}
 

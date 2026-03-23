@@ -1,7 +1,8 @@
 export type CrawlResponse = {
-  status: "processed" | "already_seen" | string;
+  status: "processed" | "already_seen";
   url: string;
   new_words: number;
+  description?: string | null;
 };
 
 export type TopWord = {

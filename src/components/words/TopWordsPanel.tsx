@@ -7,6 +7,43 @@ type TopWordsPanelProps = {
 };
 
 export function TopWordsPanel({ words, loading, onRefresh }: TopWordsPanelProps) {
+  const minCount = words.length ? Math.min(...words.map((word) => word.count)) : 0;
+  const maxCount = words.length ? Math.max(...words.map((word) => word.count)) : 0;
+
+  const getScale = (count: number) => {
+    if (maxCount === minCount) {
+      return 0.55;
+    }
+    return (count - minCount) / (maxCount - minCount);
+  };
+
+  const getFontSize = (count: number) => {
+    const normalized = getScale(count);
+    return `${Math.round(15 + normalized * 20)}px`;
+  };
+
+  const getTextColor = (count: number) => {
+    const normalized = getScale(count);
+    if (normalized > 0.75) {
+      return "text-amber-300";
+    }
+    if (normalized > 0.45) {
+      return "text-emerald-300";
+    }
+    return "text-cyan-300";
+  };
+
+  const getBoxTone = (count: number) => {
+    const normalized = getScale(count);
+    if (normalized > 0.75) {
+      return "border-amber-500/40 bg-amber-500/10";
+    }
+    if (normalized > 0.45) {
+      return "border-emerald-500/40 bg-emerald-500/10";
+    }
+    return "border-cyan-500/40 bg-cyan-500/10";
+  };
+
   return (
     <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -35,14 +72,23 @@ export function TopWordsPanel({ words, loading, onRefresh }: TopWordsPanelProps)
       ) : words.length === 0 ? (
         <p className="text-sm text-slate-400">Aun no hay palabras para mostrar.</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="columns-1 gap-3 space-y-3 sm:columns-2 lg:columns-3">
           {words.map((item, index) => (
             <li
               key={`${item.word}-${index}`}
-              className="flex items-center justify-between rounded-md border border-slate-800 bg-slate-950 px-3 py-2 text-sm"
+              className={`break-inside-avoid rounded-md border px-3 py-3 ${getBoxTone(item.count)}`}
             >
-              <span>{item.word}</span>
-              <span className="font-semibold text-cyan-300">{item.count}</span>
+              <div className="flex items-baseline justify-between gap-3">
+                <span
+                  className={`font-semibold leading-none ${getTextColor(item.count)}`}
+                  style={{ fontSize: getFontSize(item.count) }}
+                >
+                  {item.word}
+                </span>
+                <span className="text-xs font-medium text-slate-200">
+                  {item.count}
+                </span>
+              </div>
             </li>
           ))}
         </ul>
