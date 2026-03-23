@@ -1,9 +1,5 @@
-export type CrawlRequest = {
-  url: string;
-};
-
 export type CrawlResponse = {
-  status: string;
+  status: "processed" | "already_seen" | string;
   url: string;
   new_words: number;
 };

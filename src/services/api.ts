@@ -1,22 +1,21 @@
-import type {
-  CrawlRequest,
-  CrawlResponse,
-  TopWordsResponse,
-} from "../types/api";
+import type { CrawlResponse, TopWordsResponse } from "../types/api";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000";
 
-export async function postCrawl(payload: CrawlRequest): Promise<CrawlResponse> {
-  const response = await fetch(`${API_BASE_URL}/crawl`, {
+export async function postCrawl(productUrl: string): Promise<CrawlResponse> {
+  const endpoint = `${API_BASE_URL}/crawl?productUrl=${encodeURIComponent(productUrl)}`;
+  const response = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
+    if (response.status === 400) {
+      throw new Error("URL invalida o no corresponde a Amazon.");
+    }
+    if (response.status === 502) {
+      throw new Error("Fallo al obtener o parsear Amazon. Reintenta.");
+    }
     throw new Error(`POST /crawl failed with status ${response.status}`);
   }
 

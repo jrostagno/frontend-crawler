@@ -10,7 +10,11 @@ export function CrawlForm({ url, onUrlChange, onSubmit, loading }: CrawlFormProp
     <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
       <h2 className="mb-1 text-lg font-semibold">Crawl URL</h2>
       <p className="mb-4 text-sm text-slate-400">
-        Ingresa una URL de Amazon y envia el request al endpoint <code className="rounded bg-slate-800 px-1 py-0.5">POST /crawl</code>.
+        Ingresa una URL de Amazon y envia el request al endpoint{" "}
+        <code className="rounded bg-slate-800 px-1 py-0.5">
+          POST /crawl?productUrl=...
+        </code>
+        .
       </p>
 
       <form className="space-y-3" onSubmit={onSubmit}>

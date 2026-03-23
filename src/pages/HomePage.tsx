@@ -36,7 +36,7 @@ export function HomePage() {
     setCrawlLoading(true);
     setError(null);
     try {
-      const response = await postCrawl({ url });
+      const response = await postCrawl(url);
       setCrawlResult(response);
       await refreshWords();
     } catch (requestError) {
@@ -53,6 +53,13 @@ export function HomePage() {
   useEffect(() => {
     void refreshWords();
   }, []);
+
+  const crawlStatusLabel =
+    crawlResult?.status === "processed"
+      ? "Procesado (URL nueva)"
+      : crawlResult?.status === "already_seen"
+        ? "Ya vista (sin recrawl)"
+        : crawlResult?.status;
 
   return (
     <div className="space-y-6">
@@ -77,7 +84,7 @@ export function HomePage() {
           <h2 className="mb-2 text-base font-semibold text-emerald-300">
             Ultimo crawl procesado
           </h2>
-          <p className="text-emerald-200">Estado: {crawlResult.status}</p>
+          <p className="text-emerald-200">Estado: {crawlStatusLabel}</p>
           <p className="text-emerald-200">URL: {crawlResult.url}</p>
           <p className="text-emerald-200">
             Nuevas palabras agregadas: {crawlResult.new_words}
