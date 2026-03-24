@@ -24,7 +24,7 @@ export async function postCrawl(productUrl: string): Promise<CrawlResponse> {
 
 export async function getTopWords(limit = 10): Promise<TopWordsResponse> {
   const response = await fetch(
-    `${API_BASE_URL}/words/top?limit=${encodeURIComponent(limit)}`
+    `${API_BASE_URL}/words/top?limit=${encodeURIComponent(limit)}`,
   );
 
   if (!response.ok) {
