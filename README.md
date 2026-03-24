@@ -13,6 +13,7 @@ Stack:
 - Node.js 18+ (recomendado 20+)
 - npm
 - Backend corriendo en `http://127.0.0.1:8000`
+- Docker (opcional, para levantar sin Node local)
 
 ## Variables de entorno
 
@@ -44,6 +45,38 @@ npm run dev
 App local:
 
 - `http://localhost:5173`
+
+## Ejecutar con Docker
+
+Si queres que el recruiter levante el frontend sin instalar Node, puede usar Docker:
+
+```bash
+docker compose up --build
+```
+
+App en Docker:
+
+- `http://localhost:8080`
+
+### Configurar URL del backend para Docker
+
+Vite inyecta `VITE_API_BASE_URL` en **build time**.
+Por defecto `docker-compose.yml` usa:
+
+- `http://localhost:8000`
+
+Si necesitas otra URL, pasala al comando:
+
+```bash
+VITE_API_BASE_URL=http://127.0.0.1:8000 docker compose up --build
+```
+
+### Si el backend esta dockerizado en otro repo
+
+El frontend dockerizado se sirve desde `http://localhost:8080`, por lo tanto el backend debe permitir ese origin en CORS, por ejemplo:
+
+- `http://localhost:8080`
+- `http://127.0.0.1:8080`
 
 ## API esperada (backend)
 

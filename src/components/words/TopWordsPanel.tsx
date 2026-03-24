@@ -6,9 +6,17 @@ type TopWordsPanelProps = {
   onRefresh: () => void;
 };
 
-export function TopWordsPanel({ words, loading, onRefresh }: TopWordsPanelProps) {
-  const minCount = words.length ? Math.min(...words.map((word) => word.count)) : 0;
-  const maxCount = words.length ? Math.max(...words.map((word) => word.count)) : 0;
+export function TopWordsPanel({
+  words,
+  loading,
+  onRefresh,
+}: TopWordsPanelProps) {
+  const minCount = words.length
+    ? Math.min(...words.map((word) => word.count))
+    : 0;
+  const maxCount = words.length
+    ? Math.max(...words.map((word) => word.count))
+    : 0;
 
   const getScale = (count: number) => {
     if (maxCount === minCount) {
@@ -70,25 +78,25 @@ export function TopWordsPanel({ words, loading, onRefresh }: TopWordsPanelProps)
       {loading ? (
         <p className="text-sm text-slate-300">Cargando top palabras...</p>
       ) : words.length === 0 ? (
-        <p className="text-sm text-slate-400">Aun no hay palabras para mostrar.</p>
+        <p className="text-sm text-slate-400">
+          Aun no hay palabras para mostrar.
+        </p>
       ) : (
         <ul className="columns-1 gap-3 space-y-3 sm:columns-2 lg:columns-3">
           {words.map((item, index) => (
             <li
               key={`${item.word}-${index}`}
-              className={`break-inside-avoid rounded-md border px-3 py-3 ${getBoxTone(item.count)}`}
+              className={`relative break-inside-avoid rounded-md border px-3 py-3 pr-12 ${getBoxTone(item.count)}`}
             >
-              <div className="flex items-baseline justify-between gap-3">
-                <span
-                  className={`font-semibold leading-none ${getTextColor(item.count)}`}
-                  style={{ fontSize: getFontSize(item.count) }}
-                >
-                  {item.word}
-                </span>
-                <span className="text-xs font-medium text-slate-200">
-                  {item.count}
-                </span>
-              </div>
+              <span
+                className={`block max-w-full break-words font-semibold leading-tight ${getTextColor(item.count)}`}
+                style={{ fontSize: getFontSize(item.count) }}
+              >
+                {item.word}
+              </span>
+              <span className="absolute right-3 top-3 text-xs font-medium text-slate-200">
+                {item.count}
+              </span>
             </li>
           ))}
         </ul>
