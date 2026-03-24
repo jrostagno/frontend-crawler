@@ -51,7 +51,11 @@ App local:
 Si queres que el recruiter levante el frontend sin instalar Node, puede usar Docker:
 
 ```bash
+# Levantar
 docker compose up --build
+
+# Bajar
+docker compose down
 ```
 
 App en Docker:
