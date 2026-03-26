@@ -10,11 +10,19 @@ export async function postCrawl(productUrl: string): Promise<CrawlResponse> {
   });
 
   if (!response.ok) {
+    if (response.status === 429) {
+      const retryAfter = response.headers.get("Retry-After");
+      throw new Error(
+        retryAfter
+          ? `Too many requests. Retry in ${retryAfter}s.`
+          : "Too many requests. Please retry in a few seconds.",
+      );
+    }
     if (response.status === 400) {
-      throw new Error("URL invalida o no corresponde a Amazon.");
+      throw new Error("Invalid URL or URL is not from Amazon.");
     }
     if (response.status === 502) {
-      throw new Error("Fallo al obtener o parsear Amazon. Reintenta.");
+      throw new Error("Failed to fetch or parse Amazon page. Please retry.");
     }
     throw new Error(`POST /crawl failed with status ${response.status}`);
   }

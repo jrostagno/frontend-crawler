@@ -10,7 +10,7 @@ export function CrawlForm({ url, onUrlChange, onSubmit, loading }: CrawlFormProp
     <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
       <h2 className="mb-1 text-lg font-semibold">Crawl URL</h2>
       <p className="mb-4 text-sm text-slate-400">
-        Ingresa una URL de Amazon y envia el request al endpoint{" "}
+        Enter an Amazon URL and send the request to{" "}
         <code className="rounded bg-slate-800 px-1 py-0.5">
           POST /crawl?productUrl=...
         </code>
@@ -32,7 +32,7 @@ export function CrawlForm({ url, onUrlChange, onSubmit, loading }: CrawlFormProp
           disabled={loading}
           className="rounded-md bg-cyan-500 px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {loading ? "Procesando..." : "Enviar a crawl"}
+          {loading ? "Processing..." : "Send to crawl"}
         </button>
       </form>
     </section>

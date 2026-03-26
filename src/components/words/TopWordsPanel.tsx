@@ -56,9 +56,9 @@ export function TopWordsPanel({
     <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-semibold">Top palabras</h2>
+          <h2 className="text-lg font-semibold">Top words</h2>
           <p className="text-sm text-slate-400">
-            Datos obtenidos desde{" "}
+            Data fetched from{" "}
             <code className="rounded bg-slate-800 px-1 py-0.5">
               GET /words/top
             </code>
@@ -71,15 +71,15 @@ export function TopWordsPanel({
           disabled={loading}
           className="rounded-md border border-slate-700 px-3 py-2 text-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {loading ? "Actualizando..." : "Refrescar"}
+          {loading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
 
       {loading ? (
-        <p className="text-sm text-slate-300">Cargando top palabras...</p>
+        <p className="text-sm text-slate-300">Loading top words...</p>
       ) : words.length === 0 ? (
         <p className="text-sm text-slate-400">
-          Aun no hay palabras para mostrar.
+          No words to display yet.
         </p>
       ) : (
         <ul className="columns-1 gap-3 space-y-3 sm:columns-2 lg:columns-3">

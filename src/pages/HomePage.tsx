@@ -24,7 +24,7 @@ export function HomePage() {
       const message =
         requestError instanceof Error
           ? requestError.message
-          : "No se pudo obtener el top de palabras.";
+          : "Could not fetch top words.";
       setError(message);
     } finally {
       setWordsLoading(false);
@@ -43,7 +43,7 @@ export function HomePage() {
       const message =
         requestError instanceof Error
           ? requestError.message
-          : "No se pudo procesar el crawl.";
+          : "Could not process crawl request.";
       setError(message);
     } finally {
       setCrawlLoading(false);
@@ -56,9 +56,9 @@ export function HomePage() {
 
   const crawlStatusLabel =
     crawlResult?.status === "processed"
-      ? "Procesado (URL nueva)"
+      ? "Processed (new URL)"
       : crawlResult?.status === "already_seen"
-        ? "Ya vista (sin recrawl)"
+        ? "Already seen (no recrawl)"
         : crawlResult?.status;
   const productDescription = crawlResult?.description;
 
@@ -83,12 +83,12 @@ export function HomePage() {
       {crawlResult && (
         <section className="rounded-xl border border-emerald-800/60 bg-emerald-950/30 p-5 text-sm">
           <h2 className="mb-2 text-base font-semibold text-emerald-300">
-            Ultimo crawl procesado
+            Last crawl result
           </h2>
-          <p className="text-emerald-200">Estado: {crawlStatusLabel}</p>
+          <p className="text-emerald-200">Status: {crawlStatusLabel}</p>
           <p className="text-emerald-200">URL: {crawlResult.url}</p>
           <p className="text-emerald-200">
-            Nuevas palabras agregadas: {crawlResult.new_words}
+            New words added: {crawlResult.new_words}
           </p>
           {productDescription ? (
             <div className="mt-4 rounded-lg border border-emerald-700/50 bg-emerald-950/40 p-3">
@@ -99,7 +99,7 @@ export function HomePage() {
             </div>
           ) : (
             <p className="mt-3 text-xs text-emerald-300/80">
-              El backend no envio descripcion en la respuesta del crawl.
+              Backend did not return a description for this crawl response.
             </p>
           )}
         </section>
